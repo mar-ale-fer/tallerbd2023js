@@ -18,3 +18,4 @@ setInterval(() => {
 setInterval(() => {
     console.log("mas lento -----")
 },2000)
+
