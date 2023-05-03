@@ -1,9 +1,22 @@
 const http = require('http')
+const fileSystem = require('fs')
+const path = require('path')
 const server = http.createServer((req, res)  => {
+    var filePath = path.join(__dirname, 'index.html');
+    var stat = fileSystem.statSync(filePath);
+
     if (req.url=== '/') { 
         res.end('WELCOME TO OUR HOME PAGE')
     } else if (req.url === '/about') {
         res.end('Here is our short history')
+    } else if (req.url === '/index') {
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Content-Length': stat.size
+        });
+        var readStream = fileSystem.createReadStream(filePath);
+        // We replaced all the event handlers with a simple call to readStream.pipe()
+        readStream.pipe(res)
 
     }else {
         res.end(`
