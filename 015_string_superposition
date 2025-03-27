@@ -1,0 +1,61 @@
+const str= "Hello, World, World 2, World 3";
+
+console.log( str.includes("World")); // true
+console.log( str.indexOf("World")); // 7
+console.log( str.match(/World/g)) // [ 'World', 'World', 'World' ]
+
+// Calculate the number of time the secuence sec can appear in
+// a string of length n, with valid lowercase english letters
+//allow superposition
+
+// case 1. sec= asd, n = 7, x = 2.  "asdasdj"
+// case 2. sec 55abc55, n =17, x = 3. "55abc55abc55abc55"
+
+
+//I want to know if there are equal prefix and suffix and its length
+const suffixMatch = (str) => {
+    //It will be room for prefix and suffix, then each shall be 
+    //less than a half of the whole string
+    let lengthOfMatching = 0
+
+    for (let currentLength=1; currentLength <= Math.floor(str.length /2); currentLength++) {
+        const prefix = str.slice(0, currentLength)
+        const suffix = str.slice(-currentLength)
+        
+        if ( prefix === suffix) lengthOfMatching = currentLength
+    }
+
+    return lengthOfMatching
+} 
+
+// const sec = "abc"
+// const n = 7
+// x= 2
+
+console.log("---------")
+const sec = "55abc55"
+const n = 17
+
+//number of times the sec strin appears in a string of length n, allowing overlaping
+
+const lenghtOfStr = sec.length
+const lenghtOfOverlapping = suffixMatch(sec)
+const lenghtOfOverlappedString = lenghtOfStr - lenghtOfOverlapping
+
+console.log({
+    lenghtOfStr,
+    lenghtOfOverlappedString
+})
+let numberOfElements = 1
+let elementsTotalLength = lenghtOfStr
+while (elementsTotalLength <= n) {
+    numberOfElements++
+    //-1, exclude the special case of the first string, which is a whole withou overlapping
+    elementsTotalLength = lenghtOfStr +  (numberOfElements-1)*lenghtOfOverlappedString
+    console.log({
+        numberOfElements,
+        elementsTotalLength
+    })
+}
+
+console.log(numberOfElements-1)
